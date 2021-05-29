@@ -402,12 +402,6 @@ class MethodHelper:
         #############################
         # Config
         #############################
-        # Set up smtp and email information for email functions
-        self.smtp_server = "smtp.sendgrid.net"
-        self.smtp_port = 465
-        self.smtp_user = "apikey"
-        self.smtp_password = ""
-        self.email_from = "PleaseDontReply@fs-notify.com"
 
         #############################
         # Assigned Variables
@@ -1155,73 +1149,7 @@ class MethodHelper:
 
     # Sends an email to the user with the class message variable as the default
     def send_email(self, email_to: str, subject: str, message=None, email_cc=None, attachment=None, reply_to=None):
-        # Sets the error message to the default
-        self.error_message = []
-
-        # If the email_to, email_cc, and attachment are set as strings, convert them to lists
-        if isinstance(email_to, str) == True:
-            if ";" in email_to:
-                email_to = email_to.split(";")
-            else:
-                email_to = [email_to]
-        if isinstance(email_cc, str) == True:
-            if ";" in email_cc:
-                email_cc = email_cc.split(";")
-            else:
-                email_cc = [email_cc]
-        if isinstance(attachment, str) == True:
-            attachment = [attachment]
-
-        # Sets the email fields. Note that setting the email from and to does NOT actually send emails to the individual. It's set in "sendmail" function.
-        msg = MIMEMultipart()                   # Sets up the email header object
-        msg['From'] = self.email_from
-        msg['To'] = ", ".join(email_to)
-        if email_cc != None:
-            msg['Cc'] = ", ".join(email_cc)
-        msg['Subject'] = subject
-        if reply_to != None:
-            msg['reply-to'] = reply_to
-        if message == None:
-            mail_body = self.message
-        else:
-            mail_body = message
-
-        # Attaches the email body into the message as HTML
-        msg.attach(MIMEText(mail_body, 'html'))
-
-        # Attaches each file into the message if attachment exists
-        if attachment is not None:
-            for file_path in attachment:
-                # Check if the file path exists and raise error if it does not
-                if self.file_exists(file_path) == False:
-                    raise Exception("MethodHelper class error: file does not exist or is empty. File path: " + str(file_path))
-                
-                # Gets the file name from the full file path
-                filename = self.get_file_name(file_path)  
-
-                # Imports the file into a container, set up the image message into base64 format, and then attaches it to the email message
-                file = open(file_path, "rb") 
-                img_msg = MIMEBase('application', 'octet-stream')                                   # Instance of MIMEBase for the image content
-                img_msg.set_payload((file).read())                                                  # Set the file info into the message
-                encoders.encode_base64(img_msg)                                                     # Encode the msg into base64 
-                img_msg.add_header('Content-Disposition', "attachment; filename= %s" % filename)    # Adds a header to the message with the filename 
-                msg.attach(img_msg)                                                                 # Attaches the image to the overall message
-
-        # Combines the two email_cc and email_to into a a single list so it can be used to send email to the users
-        if email_cc == None:
-            mail_recipient = email_to
-        else:
-            mail_recipient = email_to + email_cc
-
-        #Sets up the SMTP information and then sends the email out
-        try:
-            with smtplib.SMTP_SSL(self.smtp_server, self.smtp_port) as server:
-                server.ehlo()
-                server.login(self.smtp_user, self.smtp_password)
-                server.sendmail(self.email_from, mail_recipient, msg.as_string())
-                server.close()
-        except Exception as e:
-            self.error_message.append("Unable to send SMTP email | Exception message: " + str(e))
+        pass
 
     # Builds a space-separated block of text
     # Accepts a string or a list of strings

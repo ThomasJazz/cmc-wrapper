@@ -3,7 +3,7 @@ import requests
 import json
 import os
 
-# Custom formatting exception
+# Custom exception for incorrect formatting arguments 
 class IllegalReturnFormat(Exception):
     def __init__(self, msg=f'Error: Invalid value supplied for "formatting" parameter.', *args, **kwargs):
         super().__init__(msg, *args, **kwargs)

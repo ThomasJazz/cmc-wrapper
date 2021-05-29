@@ -43,15 +43,6 @@ def print_data(dataset: dict, function_name: str):
 #####################
 #### SCRIPT BODY ####
 #####################
-latest_data = crypto.get_listings_latest()
-
-# Loop through all the different coins in the dataset and print some of their info
-for coin in latest_data['data']:
-    coin_name = coin['name']
-    usd_quote = coin['quote']['USD']['price']
-    quote_time = coin['quote']['USD']['last_updated']
-
-    #print(f'{coin_name} @ ${usd_quote} (Last updated: {quote_time})')
 
 #export_json(latest_data, f'{json_export_path}/cryptocurrency/listings/latest')
 btc_map = crypto.get_map('BTC', formatting='dict')
@@ -60,5 +51,6 @@ print_data(btc_map, 'get_map')
 info = crypto.get_info('ETH', formatting='dict')
 print_data(info, 'get_info')
 
+data = crypto.get_listings_latest
 
 #print(json.dumps(btc_info, indent=4))
