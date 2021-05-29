@@ -1,2 +1,2 @@
-# crypto-influencers
-Uses Coin Market Cap and Twitter API's to determine potential market influencers
+# Coin Market Cap - Wrapper
+A wrapper for the [Coin Market Cap API](https://coinmarketcap.com/api/documentation/v1) 
